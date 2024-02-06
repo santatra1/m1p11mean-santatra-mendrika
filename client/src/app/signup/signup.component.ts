@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 import { RoleService } from '../services/role.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../services/user.service';
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-signup',
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
-    private userService: UserService,
+    private clientService: ClientService,
     private _toastService: ToastService
   ) {}
 
@@ -61,12 +61,14 @@ export class SignupComponent implements OnInit {
     event.preventDefault();
     if (this.registrationForm.valid) {
       const userData = this.registrationForm.value;
-      this.userService.registerUser(userData).subscribe(
+      this.clientService.registerClient(userData).subscribe(
         (response: any) => {
           this.registrationForm.reset();
           this._toastService.info('Inscription réussie');
+          console.log(response)
         },
         (error: any) => {
+          console.log(error)
           this._toastService.error("Erreur lors de l'inscription");
         }
       );
