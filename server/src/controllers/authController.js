@@ -5,7 +5,8 @@ const authController = {
     login: async(req, res) => {
         try {
             const { email, password } = req.body;
-            const user = await User.findOne({ email });
+            const user = await User.findOne({ email })
+            .populate('role');
 
             if (!user) {
               return res.status(401).json({ error: 'Authentication failed' });
@@ -18,7 +19,7 @@ const authController = {
             }
             const token = jwt.sign({
                 id: user._id,
-                role: user.role
+                role: user.role.name
             }, process.env.SECRET_KEY, { expiresIn: '1h' });
             return res.status(200).json({ token })
           } catch (error) {

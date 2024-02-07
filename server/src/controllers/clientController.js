@@ -34,15 +34,30 @@ const clientController = {
 
       const savedClient = await newClient.save()
 
-      res.status(201).json("ok")
+      return res.status(201).json({
+        message: "Client ajouté avec succès"
+      })
     } catch (error) {
       console.error(error)
-      res.status(500).json({ message: 'Erreur interne du serveur.' })
+      return res.status(500).json({ message: 'Erreur interne du serveur.' })
     }
   },
 
-  getUserById: async (req, res) => {
-    // Logique pour obtenir un utilisateur par ID
+  getClientByUserId: async (req, res) => {
+    try{
+      const client = await Client.findOne({ user: req.params.id })
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'role'
+        }
+      });
+
+      return res.status(201).json({ client: client  })
+    }catch(error){
+      console.error(error)
+      return res.status(500).json({ message: 'Erreur interne du serveur.' })
+    }
   },
 
   updateUser: async (req, res) => {
