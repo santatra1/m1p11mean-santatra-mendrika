@@ -1,72 +1,25 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-	<link rel="stylesheet" href="/assets/login/css/style.css">
-
-	</head>
-	<body>
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-12 col-lg-10">
-					<div class="wrap d-md-flex">
-						<div class="img" style="background-image: url(assets/login/images/bg-1.jpg);">
-			      </div>
-						<div class="login-wrap p-4 p-md-5">
-			      	<div class="d-flex">
-			      		<div class="w-100">
-			      			<h3 class="mb-4">Se connecter</h3>
-			      		</div>
-								<div class="w-100">
-									<p class="social-media d-flex justify-content-end">
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-									</p>
-								</div>
-			      	</div>
-							<form action="#" class="signin-form" 
-							[formGroup]="loginForm"
-							(ngSubmit)="signIn($event)"
-							class="signin-form">
-			      		<div class="form-group mb-3">
-			      			<label class="label" for="name">Nom</label>
-			      			<input type="text" class="form-control" placeholder="Nom" formControlName="email" required >
-			      		</div>
-		            <div class="form-group mb-3">
-		            	<label class="label" for="password">Mot de passe</label>
-		              <input type="password" class="form-control" placeholder="Mot de passe" formControlName="password" required >
-		            </div>
-		            <div class="form-group">
-		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Se connecter</button>
-		            </div>
-		            <div class="form-group d-md-flex">
-		            	<div class="w-50 text-left">
-			            	<label class="checkbox-wrap checkbox-primary mb-0">Se souvenir de moi
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-										</label>
-									</div>
-									<div class="w-50 text-md-right">
-										<a href="#">Mot de passe oublié</a>
-									</div>
-		            </div>
-		          </form>
-		          <p class="text-center">Pas encore membre? <a routerLink="/signup" class="nav-item nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">S'inscrire</a></p>
-		        </div>
-		      </div>
+<!-- Sign In Start -->
+<div class="container-fluid">
+	<div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+		<div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+			<form class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3" [formGroup]="loginForm" (ngSubmit)="signIn($event)">
+				<div class="d-flex align-items-center justify-content-between mb-3">
+					<a href="index.html" class="">
+						<h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Se connecter</h3>
+					</a>
 				</div>
-			</div>
+				<div class="form-floating mb-3">
+					<input type="email" class="form-control" id="floatingInput" formControlName="email" placeholder="Adresse Email">
+					<label for="floatingInput">Adresse Email</label>
+				</div>
+				<div class="form-floating mb-4">
+					<input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Mot de passe">
+					<label for="floatingPassword">Mot de passe</label>
+				</div>
+				<button type="submit" class="btn btn-primary py-3 w-100 mb-4">Connexion</button>
+				<p class="text-center mb-0">Vous n'avez pas de compte ? <a routerLink="/signup">S'inscrire</a></p>
+			</form>
 		</div>
-	</section>
-	</body>
-</html>
-
+	</div>
+</div>
+<!-- Sign In End -->

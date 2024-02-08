@@ -1,157 +1,40 @@
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-
-    <link rel="stylesheet" href="/assets/login/css/style.css" />
-  </head>
-  <body>
-    <section class="ftco-section">
-      <div class="container">
-        <div class="row justify-content-center"></div>
-        <div class="row justify-content-center">
-          <div class="col-md-12 col-lg-10">
-            <div class="wrap d-md-flex">
-              <div
-                class="img"
-                style="background-image: url(assets/login/images/bg-1.jpg)"
-              ></div>
-              <div class="login-wrap p-4 p-md-5">
-                <div class="d-flex">
-                  <div class="w-100">
-                    <h3 class="mb-4">S' inscrire</h3>
-                  </div>
-                  <div class="w-100">
-                    <p class="social-media d-flex justify-content-end">
-                      <a
-                        href="#"
-                        class="social-icon d-flex align-items-center justify-content-center"
-                        ><span class="fa fa-facebook"></span
-                      ></a>
-                      <a
-                        href="#"
-                        class="social-icon d-flex align-items-center justify-content-center"
-                        ><span class="fa fa-twitter"></span
-                      ></a>
-                    </p>
-                  </div>
-                </div>
-                <form
-                  [formGroup]="registrationForm"
-                  (ngSubmit)="onSubmit($event)"
-                  class="signin-form"
-                >
-                  <div class="form-group mb-3">
-                    <label class="label" for="name">Nom</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Nom"
-                      formControlName="firstName"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="name">Prénom</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Prénom"
-                      formControlName="lastName"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="name">Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Email"
-                      formControlName="email"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="password">Mot de passe</label>
-                    <input
-                      formControlName="password"
-                      type="password"
-                      class="form-control"
-                      placeholder="Mot de passe"
-                      required
-                    />
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="confirmPassword"
-                      >Confirmer le mot de passe</label
-                    >
-                    <input
-                      formControlName="confirmPassword"
-                      type="password"
-                      class="form-control"
-                      placeholder="Confirmer le mot de passe"
-                      required
-                    />
-                    <div *ngIf="registrationForm.hasError('mismatch')">
-                      Les mots de passe ne correspondent pas.
-                    </div>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="role">Rôle</label>
-                    <select
-                      formControlName="role"
-                      class="form-control"
-                      required
-                    >
-                      <option
-                        *ngFor="let role of roles$ | async"
-                        [value]="role.name"
-                      >
-                        {{ role.name }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <button
-                      type="submit"
-                      class="form-control btn btn-primary rounded submit px-3"
-                    >
-                      S'inscrire
-                    </button>
-                  </div>
-                </form>
-                <p class="text-center">
-                  Déjà membre? <a data-toggle="tab" href="/">Se connecter</a>
-                </p>
-              </div>
-            </div>
-          </div>
+<!-- Sign Up Start -->
+<div class="container-fluid">
+  <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+      <form class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3" [formGroup]="registrationForm" (ngSubmit)="onSubmit($event)">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <a class="">
+            <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>S'inscrire</h3>
+          </a>
         </div>
-      </div>
-    </section>
-
-    <lib-toastify-toast-container
-
-></lib-toastify-toast-container>
-
-    <script src="/assets/login/js/jquery.min.js"></script>
-    <script src="/assets/login/js/popper.js"></script>
-    <script src="/assets/login/js/bootstrap.min.js"></script>
-    <script src="/assets/login/js/main.js"></script>
-  </body>
-</html>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingFirstName" formControlName="firstName" placeholder="Nom">
+          <label for="floatingFirstName">Nom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingLastName" formControlName="lastName" placeholder="Prénom">
+          <label for="floatingLastName">Prénom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingEmail" formControlName="email" placeholder="Adresse Email">
+          <label for="floatingEmail">Adresse email</label>
+        </div>
+        <div class="form-floating mb-4">
+          <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Mot de passe">
+          <label for="floatingPassword">Mot de passe </label>
+        </div>
+        <div class="form-floating mb-4">
+          <input type="password" class="form-control" id="floatingConfirmPassword" formControlName="confirmPassword" placeholder="Confirmez le mot de passe">
+          <label for="floatingConfirmPassword">Confirmez le mot de passe</label>
+        </div>
+        <p *ngIf="registrationForm.hasError('mismatch')" class="text-danger">
+          Les mots de passe ne correspondent pas.
+        </p>
+        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Inscription</button>
+        <p class="text-center mb-0">Vous avez déjà un compte? <a routerLink="">Se connecter</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Sign Up End -->

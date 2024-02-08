@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
 import { ClientService } from '../services/client.service';
+import { RouterLink,RouterLinkActive, Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -20,6 +21,7 @@ import { ClientService } from '../services/client.service';
     ReactiveFormsModule,
     HttpClientModule,
     AngularToastifyModule,
+    RouterLink
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
@@ -43,7 +45,6 @@ export class SignupComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
-        role: ['', Validators.required],
       },
       { validator: this.passwordMatchValidator }
     );

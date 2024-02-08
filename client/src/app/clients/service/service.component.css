@@ -1,0 +1,17 @@
+/*** Service ***/
+.service-item .btn {
+    position: absolute;
+    right: -50px;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    color: var(--primary);
+    background: var(--dark);
+    opacity: 0;
+  }
+  
+  .service-item:hover .btn {
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+  }
