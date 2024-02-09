@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; 
-import { ClientService } from '../../services/client.service';
+import { AuthService } from '../../../services/auth.service'; 
+import { ClientService } from '../../../services/client.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FooterComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
