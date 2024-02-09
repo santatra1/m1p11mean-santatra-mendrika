@@ -9,13 +9,13 @@ const authController = {
             .populate('role');
 
             if (!user) {
-              return res.status(401).json({ error: 'Authentication failed' });
+              return res.status(401).json({email: "Adresse email incorrecte"});
             }
 
             const isPasswordValid = await user.comparePassword(password);
             
             if (!isPasswordValid) {
-              return res.status(401).json({ error: 'Authentication failed' });
+              return res.status(401).json({ password: 'Mot de passe incorrecte' });
             }
             const token = jwt.sign({
                 id: user._id,

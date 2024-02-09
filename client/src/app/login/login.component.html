@@ -9,14 +9,25 @@
 					</a>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="floatingInput" formControlName="email" placeholder="Adresse Email">
+					<input type="email" class="form-control" id="floatingInput" formControlName="email"
+						placeholder="Adresse Email">
 					<label for="floatingInput">Adresse Email</label>
 				</div>
 				<div class="form-floating mb-4">
-					<input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Mot de passe">
+					<input type="password" class="form-control" id="floatingPassword" formControlName="password"
+						placeholder="Mot de passe">
 					<label for="floatingPassword">Mot de passe</label>
 				</div>
-				<button type="submit" class="btn btn-primary py-3 w-100 mb-4">Connexion</button>
+				<p *ngIf="credentialsError" class="text-danger">{{ credentialsError }}</p>
+				<button type="submit" class="btn btn-primary py-3 w-100 mb-4" [disabled]="isButtonDisabled">
+					<div *ngIf="!isLoading">Connexion</div>
+					<div
+						*ngIf="isLoading"
+						class="spinner-border text-white" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+				</button>
+				<p class="text-danger"></p>
 				<p class="text-center mb-0">Vous n'avez pas de compte ? <a routerLink="/signup">S'inscrire</a></p>
 			</form>
 		</div>
