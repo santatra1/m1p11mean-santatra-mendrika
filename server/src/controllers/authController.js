@@ -23,7 +23,7 @@ const authController = {
             }, process.env.SECRET_KEY, { expiresIn: '1h' });
             return res.status(200).json({ token })
           } catch (error) {
-            return res.status(500).json({ error: 'Authentication failed', errorText: error });
+            return res.status(500).json({ error: "Echec d'authentification.", errorText: error });
         }
     }
 }
