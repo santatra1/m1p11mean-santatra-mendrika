@@ -1,7 +1,7 @@
-const Role = require('../models/Role')
-const User = require('../models/User')
-const Employee = require('../models/Employee')
-const Service = require('../models/Service')
+const Role = require('../../models/Role')
+const User = require('../../models/User')
+const Employee = require('../../models/Employee')
+const Service = require('../../models/Service')
 
 const employeeController = {
   create: async (req, res) => {
@@ -74,4 +74,4 @@ const employeeController = {
   },
 }
 
-module.exports = clientController
+module.exports = employeeController
