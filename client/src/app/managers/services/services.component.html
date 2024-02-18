@@ -1,0 +1,112 @@
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-12 col-xl-12">
+                    <div class="bg-secondary text-center rounded p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Gestion des services</h6>
+                        </div>
+                        <div>
+                            <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+                                <div class="mb-3">
+                                  <label for="nom" class="form-label text-white">Nom</label>
+                                  <input type="text" class="form-control" id="nom" formControlName="nom" required>
+                                </div>
+                              
+                                <div class="mb-3">
+                                  <label for="description" class="form-label text-white">Description</label>
+                                  <textarea class="form-control" id="description" formControlName="description" required></textarea>
+                                </div>
+                              
+                                <div class="mb-3">
+                                  <label for="prix" class="form-label text-white">Prix (Ariary)</label>
+                                  <input type="number" class="form-control" id="prix" formControlName="prix" required>
+                                </div>
+                              
+                                <div class="mb-3">
+                                  <label for="duree" class="form-label text-white">Durée ( Heure )</label>
+                                  <input type="text" class="form-control" id="duree" formControlName="duree" required>
+                                </div>
+                              
+                                <div class="mb-3">
+                                  <label for="commission" class="form-label text-white">Commission (Ariary)</label>
+                                  <input type="number" class="form-control" id="commission" formControlName="commission" required>
+                                </div>
+                              
+                                <button type="submit" class="btn btn-primary">Ajouter Service</button>
+                              </form>
+                        </div>
+                        <!-- Liste des services -->
+                        <div class="mt-4">
+                          <h6>Liste des Services</h6>
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Prix</th>
+                                <th>Durée</th>
+                                <th>Commission</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let service of servicesList">
+                                <td>{{ service.nom }}</td>
+                                <td>{{ service.description }}</td>
+                                <td>{{ service.prix }}</td>
+                                <td>{{ service.duree }}</td>
+                                <td>{{ service.commission }}</td>
+                                <td>
+                                  <button class="btn btn-outline-warning btn-sm me-1" (click)="editService(service)">Modifier</button>
+                                  <button class="btn btn-outline-danger btn-sm" (click)="deleteService(service)">Supprimer</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Formulaire de modification -->
+                          <div *ngIf="editingService" class="mt-4">
+                            <h6>Modifier le Service</h6>
+                            <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+                              <!-- Champ Nom -->
+                              <div class="mb-3">
+                                <label for="edit-nom" class="form-label text-white">Nom</label>
+                                <input type="text" class="form-control" id="edit-nom" formControlName="nom" required>
+                              </div>
+
+                              <!-- Champ Description -->
+                              <div class="mb-3">
+                                <label for="edit-description" class="form-label text-white">Description</label>
+                                <textarea class="form-control" id="edit-description" formControlName="description" required></textarea>
+                              </div>
+
+                              <!-- Champ Prix -->
+                              <div class="mb-3">
+                                <label for="edit-prix" class="form-label text-white">Prix</label>
+                                <input type="number" class="form-control" id="edit-prix" formControlName="prix" required>
+                              </div>
+
+                              <!-- Champ Durée -->
+                              <div class="mb-3">
+                                <label for="edit-duree" class="form-label text-white">Durée</label>
+                                <input type="text" class="form-control" id="edit-duree" formControlName="duree" required>
+                              </div>
+
+                              <!-- Champ Commission -->
+                              <div class="mb-3">
+                                <label for="edit-commission" class="form-label text-white">Commission</label>
+                                <input type="number" class="form-control" id="edit-commission" formControlName="commission" required>
+                              </div>
+
+                              <!-- Boutons du formulaire de modification -->
+                              <div class="mt-2">
+                                <button type="submit" class="btn btn-primary me-2">Enregistrer</button>
+                                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+                              </div>
+                            </form>
+                          </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
