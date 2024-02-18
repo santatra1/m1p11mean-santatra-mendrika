@@ -4,6 +4,24 @@ const Employee = require('../../models/Employee')
 const Service = require('../../models/Service')
 
 const employeeController = {
+  all: async(req, res) => {
+    try{
+      const { matricule, firstName, lastName } = req.params
+
+      const filter = {};
+      if (matricule) filter.matricule = { $regex: new RegExp(matricule, 'i') };
+      if (firstName) filter.firstName = { $regex: new RegExp(firstName, 'i') };
+      if (lastName) filter.lastName = { $regex: new RegExp(lastName, 'i') };
+      
+      const employees = await Employee.find(filter).populate("service");
+      return res.status(201).json({
+        employees
+      });
+    }catch(error){
+      console.log(error)
+      return res.status(500).json({ message: 'Erreur interne du serveur.' })
+    }
+  },
   create: async (req, res) => {
     try {
       const { firstName, lastName, email, password, service_id } = req.body
@@ -15,11 +33,11 @@ const employeeController = {
 
       const service = await Service.findOne({ _id: service_id })
       if (service) {
-        return res.status(400).json({ message: "Le service n'existe déjà." })
+        return res.status(400).json({ message: "Le service n'existe pas." })
       }
-      
+
       const userRole = await Role.findOne({ name: "employé" })
-   
+
       if (!userRole) {
         return res.status(400).json({ message: 'Rôle non trouvé.' })
       }
@@ -32,7 +50,7 @@ const employeeController = {
 
       const savedUser = await newUser.save()
 
-      const newEmployee = new Client({
+      const newEmployee = new Employee({
         firstName,
         lastName,
         user: savedUser._id,
@@ -42,7 +60,8 @@ const employeeController = {
       const savedEmployee = await newEmployee.save()
 
       return res.status(201).json({
-        message: "Client ajouté avec succès"
+        message: "Client ajouté avec succès",
+        savedEmployee
       })
     } catch (error) {
       console.error(error)
@@ -51,26 +70,39 @@ const employeeController = {
   },
 
   getEmployeeByUserId: async (req, res) => {
-    try{
+    try {
       const employee = await Employee.findOne({ user: req.params.id })
-      .populate({
-        path: 'user',
-        populate: {
-          path: 'role'
-        }
-      });
+        .populate({
+          path: 'user',
+          populate: {
+            path: 'role'
+          }
+        });
 
-      return res.status(201).json({ employee  })
-    }catch(error){
+      return res.status(201).json({ employee })
+    } catch (error) {
       console.error(error)
       return res.status(500).json({ message: 'Erreur interne du serveur.' })
     }
   },
 
   update: async (req, res) => {
-  },
+    try {
+      const { firstName, lastName, service_id } = req.body
+      const employee = await Employee.updateOne(
+        { _id: req.params.id },
+        {
+          firstName,
+          lastName,
+          service: service_id
+        }
+      );
 
-  delete: async (req, res) => {
+      return res.status(201).json({ employee })
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({ message: 'Erreur interne du serveur.' })
+    }
   },
 }
 
