@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ServicesService } from '../../services/services.service';
 import { CommonModule } from '@angular/common';
 import { Service } from '../../_intefaces/service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-services',
@@ -17,7 +18,7 @@ export class ServicesComponent {
   editForm!: FormGroup;
   editingService: Service | null = null;
 
-  constructor(private fb: FormBuilder, private serviceService: ServicesService) {}
+  constructor(private fb: FormBuilder, private serviceService: ServicesService, private toastrService: ToastrService) {}
 
   ngOnInit() {
     this.serviceForm = this.fb.group({
@@ -60,6 +61,7 @@ export class ServicesComponent {
           console.error(error);
         }
       );
+      this.toastrService.success("Ajout service effectué.")
       console.log(this.serviceForm.value);
     }else{
       console.error("Erreur dans le formulaire");
@@ -87,6 +89,7 @@ export class ServicesComponent {
           if (updatedIndex !== -1) {
             this.servicesList[updatedIndex] = response.service;
           }
+          this.toastrService.success("Modification effectué.")
           this.editForm.reset();
           this.editingService = null;
         },
@@ -107,6 +110,7 @@ export class ServicesComponent {
       this.serviceService.deleteService(service._id).subscribe(
         () => {
           this.servicesList = this.servicesList.filter(s => s._id !== service._id);
+          this.toastrService.success("Suppression effectué.")
         },
         (error) => {
           console.error(error);

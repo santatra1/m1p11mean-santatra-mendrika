@@ -7,6 +7,8 @@ import { roleGuard } from './_guards/role.guard';
 import { DashboardComponent } from './managers/dashboard/dashboard.component';
 import { ServicesComponent } from './managers/services/services.component';
 import { SidebarComponent } from './managers/sidebar/sidebar.component';
+import { IndexComponent as EmployeeList } from './managers/employees/index/index.component';
+import { CreateComponent as EmployeeCreate } from './managers/employees/create/create.component';
 
 export const routes: Routes = [
   { path: 'service', component: ServiceComponent, canActivate: [authGuard,roleGuard],data: { role: 'client' } },
@@ -15,6 +17,8 @@ export const routes: Routes = [
   { path: 'manager', component: SidebarComponent, canActivate: [authGuard,roleGuard],data: { role: 'manager' },
     children: [
       { path: '', component: DashboardComponent },
-      { path: 'service', component: ServicesComponent }
+      { path: 'service', component: ServicesComponent },
+      { path: 'employee', component: EmployeeList },
+      { path: 'employee/create', component: EmployeeCreate }
     ] },
 ];

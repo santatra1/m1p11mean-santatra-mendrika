@@ -1,0 +1,38 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Liste des employés</h6>
+            <a routerLink="/manager/employee/create" class="btn btn-primary" ariaCurrentWhenActive="page">Ajouter</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-white">
+                        <th scope="col">Matricule</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Service</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employees">
+                        <td>{{ employee.matricule }}</td>
+                        <td>{{ employee.firstName }}</td>
+                        <td>{{ employee.lastName }}</td>
+                        <td>{{ employee.service.nom }}</td>
+                        <td>
+                          <button class="btn btn-outline-warning btn-sm me-1">Modifier</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!isLoading && employees.length <=  0">
+                        <td colspan="5" class="text-center">Aucune donnée</td>
+                    </tr>
+                    <tr *ngIf="isLoading">
+                        <td colspan="5" class="text-center"><app-spinner></app-spinner></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

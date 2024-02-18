@@ -24,15 +24,15 @@ const employeeController = {
   },
   create: async (req, res) => {
     try {
-      const { firstName, lastName, email, password, service_id } = req.body
-
+      const { matricule, firstName, lastName, email, password, service } = req.body
+      console.log(service)
       const existingUser = await User.findOne({ email })
       if (existingUser) {
         return res.status(400).json({ message: 'Cet utilisateur existe déjà.' })
       }
 
-      const service = await Service.findOne({ _id: service_id })
-      if (service) {
+      const existingService = await Service.findOne({ _id: service })
+      if (!existingService) {
         return res.status(400).json({ message: "Le service n'existe pas." })
       }
 
@@ -51,16 +51,17 @@ const employeeController = {
       const savedUser = await newUser.save()
 
       const newEmployee = new Employee({
+        matricule,
         firstName,
         lastName,
         user: savedUser._id,
-        service: service._id
+        service: existingService._id
       })
 
       const savedEmployee = await newEmployee.save()
 
       return res.status(201).json({
-        message: "Client ajouté avec succès",
+        message: "Employé ajouté avec succès",
         savedEmployee
       })
     } catch (error) {
