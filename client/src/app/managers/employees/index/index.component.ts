@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../../../services/employee.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Employee } from '../../../_intefaces/employee';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,7 @@ import { SpinnerComponent } from '../../../_components/spinner/spinner.component
 export class IndexComponent {
   employees: Employee[] = [];
   isLoading = false;
-  constructor(private employeeService: EmployeeService, private toastrService: ToastrService) {}
+  constructor(private employeeService: EmployeeService, private toastrService: ToastrService, private router: Router) {}
 
   ngOnInit() {
     this.getAllEmployees();
@@ -35,6 +35,10 @@ export class IndexComponent {
         this.isLoading = false;
       }
     )
+  }
+
+  navigateToUpdate(id: string){
+    this.router.navigate(["/manager/employee/"+id+"/edit"])
   }
 
   deleteEmployee(id: string) {

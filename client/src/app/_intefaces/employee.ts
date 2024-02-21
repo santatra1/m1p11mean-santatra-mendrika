@@ -1,3 +1,4 @@
+import { ICredential } from "./icredential";
 import { Service } from "./service";
 export interface Employee {
     _id: string,
@@ -8,5 +9,5 @@ export interface Employee {
     endTime: string,
     isTimeDefined: boolean,
     service: Service,
-    user:string,
+    user:ICredential,
 }

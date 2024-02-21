@@ -4,6 +4,7 @@ const roleRoutes = require('./roleRoutes')
 const authRoutes = require('./authRoutes')
 const employeeRoutes = require('./managers/employeeRoutes')
 const serviceRoutes = require('./managers/serviceRoutes')
+const clientServiceRoutes = require('./clients/serviceRoutes')
 
 const router = express.Router()
 const api = '/api'
@@ -13,5 +14,6 @@ router.use(api, roleRoutes)
 router.use(api, authRoutes)
 router.use(api, employeeRoutes)
 router.use(api, serviceRoutes)
+router.use(api, clientServiceRoutes)
 
 module.exports = router

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ServicesService } from '../../../services/services.service';
 import { Service } from '../../../_intefaces/service';
@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit{
   createForm!: FormGroup;
   servicesList: Service[] = [];
   isLoading = false;

@@ -12,6 +12,12 @@ export class EmployeeService {
   private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
+  getEmployeeById(id: string | null){
+    return this.http.get<{ employee: Employee }>(`${this.apiUrl}/employee/${id}`).pipe(
+      map(response => response.employee)
+    );
+  }
+
   getEmployees(): Observable<Employee[]> {
     return this.http.get<{ employees: Employee[] }>(`${this.apiUrl}/employee`).pipe(
       map(response => response.employees)
@@ -22,7 +28,7 @@ export class EmployeeService {
     return this.http.post<any>(`${this.apiUrl}/employee/create`, employeeData);
   }
 
-  updateEmployee(employeeId: string, employeeData: any): Observable<any> {
+  updateEmployee(employeeId: string | null, employeeData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/employee/${employeeId}/update`, employeeData);
   }
   
