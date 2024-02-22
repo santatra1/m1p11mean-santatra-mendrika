@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      color: #555;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenue, {{ nom }}!</h1>
+    <p>Merci de vous être connecté le {{ date }}.</p>
+    <p>Ceci est un e-mail de confirmation pour indiquer que vous vous êtes bien connecté à notre service.</p>
+    <p>Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.</p>
+    <div class="footer">
+      <p>Merci,</p>
+      <p>Votre salon de beauté preférer</p>
+    </div>
+  </div>
+</body>
+</html>

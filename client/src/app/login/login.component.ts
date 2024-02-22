@@ -3,6 +3,7 @@ import { RouterLink,RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule,Validators } from '@angular/forms';
+import { EmailService } from '../services/email.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private emailService: EmailService
   ) {}
 
   ngOnInit(): void {
@@ -32,24 +34,41 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  signIn(event: Event){
+  signIn(event: Event) {
     event.preventDefault();
     this.isLoading = true;
     this.isButtonDisabled = true;
-
+  
     this.authService.signIn(this.loginForm.value).subscribe(
-      (data)=>{
+      (data) => {
         this.isLoading = false;
         this.isButtonDisabled = false;
-        this.authService.saveToken(data.token)
+        this.authService.saveToken(data.token);
+  
+        const to = data.user.email;
+        const dateConnexion = new Date().toLocaleDateString();
+  
+        this.sendEmail(to, dateConnexion);
       },
-      (result)=>{
-        this.isLoading = false; 
+      (result) => {
+        this.isLoading = false;
         this.isButtonDisabled = false;
-        if(result.status === 401){
+        if (result.status === 401) {
           this.credentialsError = "Ces identifiants ne correspondent pas à nos enregistrements.";
         }
       }
     );
   }
+  
+  sendEmail(to: string, dateConnexion: string) {
+    const subject = 'Connexion succès';
+    const templateFileName = 'loginSuccess';
+    const content = { nom: to, date: dateConnexion };
+  
+    this.emailService.sendEmail(to, subject, templateFileName, content).subscribe(
+      response => console.log(response),
+      error => console.error(error)
+    );
+  }
+  
 }
