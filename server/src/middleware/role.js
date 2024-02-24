@@ -1,11 +1,16 @@
 const jwt = require('jsonwebtoken');
 
-function role(role) {
+function role(roles) {
     return (req, res ,next) => {
-        console.log(req.user.role);
-        if(req.user.role !== role){
+        //console.log(req.user.role);
+        if (Array.isArray(roles)) {     
+            if (!roles.includes(req.user.role)) {
+                return res.status(403).json({message: "Non autorisé"})
+            }
+        }else{
             return res.status(403).json({message: "Non autorisé"})
         }
+
 
         next();
     }
