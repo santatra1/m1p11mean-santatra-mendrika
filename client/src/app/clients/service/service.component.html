@@ -1,5 +1,3 @@
-<app-navbar>
-    
 <!-- Service Start -->
 <div class="container-xxl py-5">
     <div class="container">
@@ -11,7 +9,7 @@
             <div class="col-12 text-center" *ngIf="isLoading">
                 <app-spinner></app-spinner>
             </div>
-            <div *ngFor="let service of services" class="btn col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div *ngFor="let service of services" class="btn col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" (click)="navigateToRdv(service._id)">
                 <div class="service-item position-relative overflow-hidden bg-secondary d-flex h-100 p-5 ps-0">
                     <div class="bg-dark d-flex flex-shrink-0 align-items-center justify-content-center" style="width: 60px; height: 60px;">
                         <img class="img-fluid" src="img/haircut.png" alt="">
@@ -28,4 +26,3 @@
     </div>
 </div>
 <!-- Service End -->
-</app-navbar>

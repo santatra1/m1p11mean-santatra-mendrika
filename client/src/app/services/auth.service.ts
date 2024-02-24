@@ -34,7 +34,7 @@ export class AuthService {
     if(roleUser){
       switch(roleUser){
         case "client":
-          this.router.navigate(["service"])
+          this.router.navigate(["client/service"])
           break
         case "manager":
           this.router.navigate(["manager"])

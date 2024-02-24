@@ -15,6 +15,12 @@ export class ServicesService {
     return this.http.post<any>(`${this.apiUrl}/service`, serviceData);
   }
 
+  getById(serviceId: string | null){
+    return this.http.get<{ service: Service }>(`${this.apiUrl}/service/${serviceId}`).pipe(
+      map(response => response.service)
+    );
+  }
+
   getServices(): Observable<Service[]> {
     return this.http.get<{ services: Service[] }>(`${this.apiUrl}/service`).pipe(
       map(response => response.services)
