@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      color: #555;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bonjour, {{ client }} !</h1>
+    <p>Nous sommes ravis de vous informer d'une offre spéciale sur notre service "{{ serviceName }}".</p>
+    <p>Cette offre inclut une remise de {{ remise }}% et le nouveau prix final est de {{ finalValue }} Ariary.</p>
+    <p>Cette offre est disponible pour une durée limitée. Profitez-en dès maintenant!</p>
+    <div class="footer">
+      <p>Merci,</p>
+      <p>Votre salon de beauté préféré</p>
+    </div>
+  </div>
+</body>
+</html>

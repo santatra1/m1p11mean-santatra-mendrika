@@ -12,6 +12,7 @@ import { CreateComponent as EmployeeCreate } from './managers/employees/create/c
 import { EditComponent as EmployeeEdit } from './managers/employees/edit/edit.component';
 import { NavbarComponent as ClientNavBar } from './clients/_layouts/navbar/navbar.component';
 import { DemandeDeRendezVousComponent } from './clients/demande-de-rendez-vous/demande-de-rendez-vous.component';
+import { OfferSpecialComponent } from './managers/offer-special/offer-special.component';
 
 
 export const routes: Routes = [
@@ -31,7 +32,8 @@ export const routes: Routes = [
       { path: 'service', component: ServicesComponent },
       { path: 'employee', component: EmployeeList },
       { path: 'employee/create', component: EmployeeCreate },
-      { path: 'employee/:id/edit', component: EmployeeEdit }
+      { path: 'employee/:id/edit', component: EmployeeEdit },
+      { path: 'special-offer', component: OfferSpecialComponent },
     ]
   },
 ];

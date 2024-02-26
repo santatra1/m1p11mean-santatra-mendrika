@@ -60,6 +60,23 @@ const clientController = {
     }
   },
 
+  getAllClients: async (req, res) => {
+    try {
+        const clients = await Client.find()
+            .populate({
+                path: 'user',
+                populate: {
+                    path: 'role'
+                }
+            });
+
+        return res.status(200).json({ clients });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Erreur interne du serveur.' });
+    }
+},
+
   updateUser: async (req, res) => {
     // Logique de mise à jour d'utilisateur
   },
