@@ -27,7 +27,7 @@ db.once('open', function () {
 
 const initializeRoles = async () => {
   try {
-    const roles = ['client', 'employé', 'manager']
+    const roles = ['client', 'employee', 'manager']
 
     for (const roleName of roles) {
       await Role.findOneAndUpdate(

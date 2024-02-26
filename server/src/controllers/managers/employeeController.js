@@ -36,7 +36,7 @@ const employeeController = {
         return res.status(400).json({ message: "Le service n'existe pas." })
       }
 
-      const userRole = await Role.findOne({ name: "employé" })
+      const userRole = await Role.findOne({ name: "employee" })
 
       if (!userRole) {
         return res.status(400).json({ message: 'Rôle non trouvé.' })

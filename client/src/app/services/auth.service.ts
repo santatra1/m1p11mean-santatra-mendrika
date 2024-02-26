@@ -30,7 +30,7 @@ export class AuthService {
 
   redirectAfterSignIn(){
     const roleUser = this.getTokenPayload().role;
-
+    console.log(roleUser)
     if(roleUser){
       switch(roleUser){
         case "client":
@@ -38,6 +38,9 @@ export class AuthService {
           break
         case "manager":
           this.router.navigate(["manager"])
+          break
+        case "employee":
+          this.router.navigate(["employee"])
           break
         default:
           this.router.navigate([""])
