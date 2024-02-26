@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from '../_components/navbar/navbar.component';
-import { FooterComponent } from '../_components/footer/footer.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-sidebar',

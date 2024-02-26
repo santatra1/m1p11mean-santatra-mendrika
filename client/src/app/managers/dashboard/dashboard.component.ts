@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SidebarComponent } from '../_components/sidebar/sidebar.component';
 import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-dashboard',

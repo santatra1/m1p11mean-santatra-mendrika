@@ -6,7 +6,7 @@ import { authGuard } from './_guards/auth.guard';
 import { roleGuard } from './_guards/role.guard';
 import { DashboardComponent } from './managers/dashboard/dashboard.component';
 import { ServicesComponent } from './managers/services/services.component';
-import { SidebarComponent } from './managers/sidebar/sidebar.component';
+import { SidebarComponent } from './managers/_components/sidebar/sidebar.component';
 import { IndexComponent as EmployeeList } from './managers/employees/index/index.component';
 import { CreateComponent as EmployeeCreate } from './managers/employees/create/create.component';
 import { EditComponent as EmployeeEdit } from './managers/employees/edit/edit.component';
