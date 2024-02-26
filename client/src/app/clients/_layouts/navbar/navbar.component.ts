@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ClientService } from '../../../services/client.service';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterModule } from '@angular/router';
+import { EmailService } from '../../../services/email.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,14 +17,14 @@ export class NavbarComponent implements OnInit{
 
   constructor(
     private authService: AuthService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private emailService: EmailService
   ){}
 
   ngOnInit(): void {
     this.clientService.getClientProfile().subscribe(
-      (data) => {
-        console.log("data client:");
-        console.log(data);
+      (data: any) => {
+
       },
       (error) => {
         console.log("error data client:")

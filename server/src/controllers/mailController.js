@@ -23,7 +23,7 @@ exports.sendEmail = async (req, res) => {
     const html = template({ ...content });
 
     const mailOptions = {
-      from: 'expediteur@example.com',
+      from: 'salonbeaute@gmail.com',
       to,
       subject,
       html,
