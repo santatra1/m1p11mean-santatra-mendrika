@@ -22,6 +22,19 @@ const employeeController = {
       return res.status(500).json({ message: 'Erreur interne du serveur.' })
     }
   },
+  byServiceId: async (req, res) => {
+    try {
+      const { serviceId } = req.params;
+
+      const employees = await Employee.find({ service: serviceId }).populate("service");
+      return res.status(201).json({
+        employees
+      });
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ message: 'Erreur interne du serveur.' })
+    }
+  },
   create: async (req, res) => {
     try {
       const { matricule, firstName, lastName, email, password, service } = req.body

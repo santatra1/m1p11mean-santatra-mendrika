@@ -5,7 +5,7 @@ export interface Employee {
     matricule: number,
     firstName: string,
     lastName: string,
-    startTime: number,
+    startTime: string,
     endTime: string,
     isTimeDefine: boolean,
     service: Service,
