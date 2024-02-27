@@ -4,11 +4,17 @@
             <div class="mb-0 text-center h4" >Demande de rendez vous - {{ service.nom }}</div>
         </div>
         <div>
-            <form (ngSubmit)="4" class="row">
-                <div class="mb-3 col-sm-12 col-xl-12">
-                    <label for="service" class="form-label text-white">Veuillez selectionner un employé</label>
-                    <select formControlName="employee" id="" class="form-select">
+            <form [formGroup]="rdvForm" (ngSubmit)="onSubmit()" class="row">
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="service" class="form-label text-white">Date</label>
+                    <input type="date" formControlName="date" class="form-control" (change)="loadScheduleForEmployee()">
+                </div>
+
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="employee" class="form-label text-white">Employé</label>
+                    <select formControlName="employee" id="" class="form-select" (change)="loadScheduleForEmployee()">
                         <option selected value="">Veuillez choisir une option</option>
+                        <option *ngFor="let employee of employees" [value]="employee._id">{{ employee.firstName+" "+employee.lastName }}</option>
                     </select>
                 </div>
             </form>

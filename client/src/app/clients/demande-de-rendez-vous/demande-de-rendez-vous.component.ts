@@ -5,11 +5,13 @@ import { Validators, FormGroup, FormBuilder, ReactiveFormsModule } from '@angula
 import { ServicesService } from '../../services/services.service';
 import { Service } from '../../_intefaces/service';
 import { ActivatedRoute } from '@angular/router';
+import { Employee } from '../../_intefaces/employee';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-demande-de-rendez-vous',
   standalone: true,
-  imports: [SpinnerComponent, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule,SpinnerComponent],
   templateUrl: './demande-de-rendez-vous.component.html',
   styleUrl: './demande-de-rendez-vous.component.css'
 })
@@ -18,22 +20,38 @@ export class DemandeDeRendezVousComponent implements OnInit {
   services!: Service;
   serviceId!: string | null;
   service!: Service;
+  employees!: Employee[];
   constructor(
     private formBuilder: FormBuilder,
     private servicesService: ServicesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private employeeService: EmployeeService
   ){ }
 
   ngOnInit(): void {
     this.rdvForm = this.formBuilder.group({
+      date: ['', Validators.required],
       employee: ['', Validators.required],
     },)
 
     this.serviceId = this.route.snapshot.paramMap.get('serviceId');
-    this.loadServices();
+    this.loadService();
+    this.loadEmployees();
   }
 
-  loadServices(): void{
+  loadEmployees():void{
+    this.employeeService.getEmployees().subscribe(
+      (employees)=>{
+        this.employees = employees;
+        console.log(this.employees)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
+  loadService(): void{
     this.servicesService.getById(this.serviceId).subscribe(
       (service)=>{
         this.service = service
@@ -43,6 +61,16 @@ export class DemandeDeRendezVousComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+
+  onSubmit(): void{
+
+  }
+
+  loadScheduleForEmployee():void{
+    if(this.rdvForm.value.employee && this.rdvForm.value.date){
+      alert("loading shedule")
+    }
   }
 
 
