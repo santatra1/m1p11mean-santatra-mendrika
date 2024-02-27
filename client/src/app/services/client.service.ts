@@ -18,6 +18,7 @@ export class ClientService {
 
   getClientProfile(){
     const userId = this.authService.getTokenPayload().id;
+    localStorage.setItem("userId", userId);
     return this.http.get(`${this.apiUrl}/clients/${userId}`);
   }
 

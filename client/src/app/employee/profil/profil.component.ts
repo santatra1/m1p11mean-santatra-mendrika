@@ -22,6 +22,8 @@ export class ProfilComponent {
   employeeId!: string | null;
   employeeDefaultValue!: Employee;
   servicesList: Service[] = [];
+  isReadonly = true;
+  isTimeDefine = false;
 
   constructor(private fb: FormBuilder, private serviceService: ServicesService,
     private employeeService: EmployeeService,
@@ -31,8 +33,7 @@ export class ProfilComponent {
   ) { }
 
   ngOnInit() {
-    this.employeeId = this.route.snapshot.paramMap.get('id');
-    console.log(this.employeeId)
+    this.employeeId = localStorage.getItem('userId');
     this.setDefaultValue();
     
     console.log("data: ")
@@ -41,10 +42,11 @@ export class ProfilComponent {
       matricule: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      service: ['', Validators.required],
-      email: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
       password: [''],
       confirmPassword: [''],
+      isFromEmployee: [true]
     },
     { validator: this.passwordMatchValidator }
     );
@@ -66,7 +68,7 @@ export class ProfilComponent {
   }
 
   setDefaultValue(){
-    this.employeeService.getEmployeeById(this.employeeId).subscribe(
+    this.employeeService.getEmployeeByUserId(this.employeeId).subscribe(
       (employee)=>{
       this.getServicesAndSetValue(employee.service._id)
       this.editForm.patchValue({
@@ -74,7 +76,12 @@ export class ProfilComponent {
         firstName: employee.firstName,
         lastName: employee.lastName,
         email: employee.user.email,
+        startTime: employee.startTime,
+        endTime: employee.endTime,
+        isTimeDefine: employee.isTimeDefine,
+        isFromEmployee: true
       });
+      this.isTimeDefine = employee.isTimeDefine
       },
       (error)=>{
         console.log(error)
@@ -96,7 +103,7 @@ export class ProfilComponent {
         (data) => {
           this.isLoading = false;
           this.toastrService.success("Employé modifié avec succès.");
-          this.router.navigate(['/manager/employee']);
+          this.router.navigate(['/employee/profil']);
         },
         (error) => {
           this.isLoading = false;

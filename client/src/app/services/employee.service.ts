@@ -18,6 +18,12 @@ export class EmployeeService {
     );
   }
 
+  getEmployeeByUserId(id: string | null){
+    return this.http.get<{ employee: Employee }>(`${this.apiUrl}/employee/user/${id}`).pipe(
+      map(response => response.employee)
+    );
+  }
+
   getEmployees(): Observable<Employee[]> {
     return this.http.get<{ employees: Employee[] }>(`${this.apiUrl}/employee`).pipe(
       map(response => response.employees)
