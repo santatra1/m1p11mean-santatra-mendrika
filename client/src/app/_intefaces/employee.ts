@@ -7,7 +7,7 @@ export interface Employee {
     lastName: string,
     startTime: number,
     endTime: string,
-    isTimeDefined: boolean,
+    isTimeDefine: boolean,
     service: Service,
     user:ICredential,
 }

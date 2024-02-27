@@ -1,0 +1,55 @@
+<div class="container-fluid pt-4 px-4" >
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Editer un employé</h6>
+        </div>
+        <div>
+            <form [formGroup]="editForm" (ngSubmit)="updateEmployee()" class="row">
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="matricule" class="form-label text-white">Matricule</label>
+                    <input type="number" class="form-control" id="matricule" formControlName="matricule" required [readonly]="isReadonly">
+                </div>                
+    
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="firstName" class="form-label text-white">Nom</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+                </div>
+    
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="lastName" class="form-label text-white">Prénom</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+                </div>
+
+                <div class="mb-3 col-sm-12 col-xl-6">
+                    <label for="firstName" class="form-label text-white">Heure de travail</label>
+                    <div class="d-flex col-xl-12 justify-content-center mx-auto">
+                        <input type="time" class="form-control" id="startTime" formControlName="startTime" required [attr.disabled]="isTimeDefine ? true : null">
+                        <span class="mx-2 text-white">à</span>
+                        <input type="time" class="form-control" id="endTime" formControlName="endTime" required [attr.disabled]="isTimeDefine ? true : null">
+                    </div>
+                </div>
+                
+
+                  <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Mot de passe">
+                    <label for="floatingPassword">Mot de passe </label>
+                  </div>
+                  <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="floatingConfirmPassword" formControlName="confirmPassword" placeholder="Confirmez le mot de passe">
+                    <label for="floatingConfirmPassword">Confirmez le mot de passe</label>
+                  </div>
+                  <p *ngIf="editForm.hasError('mismatch')" class="text-danger">
+                    Les mots de passe ne correspondent pas.
+                  </p>
+
+                  <div class="d-flex gap-3 justify-content-center">   
+                    <button type="submit" class="btn btn-primary" *ngIf="!isLoading">Modifier</button>
+                    <app-spinner *ngIf="isLoading"></app-spinner>
+                    <a routerLink="/manager/employee" class="btn btn-warning" ariaCurrentWhenActive="page">Annuler</a>
+                  </div>
+    
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../../managers/navbar/navbar.component';
-import { SidebarComponent } from '../../managers/sidebar/sidebar.component';
+import { SidebarComponent } from '../_components/sidebar/sidebar.component';
 import { FooterComponent } from '../../managers/footer/footer.component';
 
 

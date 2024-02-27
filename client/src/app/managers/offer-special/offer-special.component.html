@@ -1,0 +1,37 @@
+<div class="container-fluid pt-4 px-4" >
+    <div class="bg-secondary text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Ajouter un employé</h6>
+        </div>
+        <div>
+            <form [formGroup]="specialOfferForm" (ngSubmit)="onSubmit()" class="row">
+                <div class="mb-3 col-sm-12">
+                    <label for="service" class="form-label text-white">Service</label>
+                    <select formControlName="service" id="" class="form-select">
+                        <option selected value="">Veuillez choisir une option</option>
+                        <option *ngFor="let service of servicesList" [value]="service._id">{{ service.nom }} - {{ service.prix }} Ar</option>
+                    </select>
+                </div>
+    
+                <div class="mb-3 col-sm-12">
+                    <label for="remise" class="form-label text-white">Remise (%)</label>
+                    <input type="number" class="form-control" id="remise" formControlName="remise" required>
+                </div>
+
+                <div class="mb-3 col-sm-12">
+                    <label for="finalValue" class="form-label text-white">Valeur Final</label>
+                    <input type="text" class="form-control" id="finalValue" formControlName="finalValue" required readonly>
+                </div>
+                  
+                
+                  <div class="d-flex gap-3 justify-content-center">   
+                    <button type="submit" class="btn btn-primary" *ngIf="!isLoading">Valider</button>
+                    <app-spinner *ngIf="isLoading"></app-spinner>
+                    <a routerLink="/manager/employee" class="btn btn-warning" ariaCurrentWhenActive="page">Annuler</a>
+                  </div>
+    
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -36,7 +36,7 @@ const employeeController = {
         return res.status(400).json({ message: "Le service n'existe pas." })
       }
 
-      const userRole = await Role.findOne({ name: "employé" })
+      const userRole = await Role.findOne({ name: "employee" })
 
       if (!userRole) {
         return res.status(400).json({ message: 'Rôle non trouvé.' })
@@ -106,45 +106,44 @@ const employeeController = {
 
   update: async (req, res) => {
     try {
-      const { matricule, firstName, lastName, service, email, password } = req.body
-      let dataToUpdate =
-      {
+      const { matricule, firstName, lastName, service, email, password, startTime, endTime, isFromEmployee = false } = req.body;
+
+      const dataToUpdate = {
         matricule,
         firstName,
         lastName,
-        service: service
-      }
+        service,
+        startTime,
+        endTime,
+        isTimeDefine: true
+      };
 
-      let dataUserToUpdate = {
+      const dataUserToUpdate = {
         email
-      }
+      };
 
-      if (req.body.password) {
-        const { password } = req.body;
+      if (password) {
         dataUserToUpdate.password = password;
       }
 
+      let employeeQuery;
+      if (isFromEmployee) {
+        employeeQuery = { user: req.params.id };
+      } else {
+        employeeQuery = { _id: req.params.id };
+      }
 
-      const employee = await Employee.updateOne(
-        { _id: req.params.id },
-        dataToUpdate
-      );
+      const [updatedEmployee] = await Promise.all([
+        Employee.findOneAndUpdate(employeeQuery, dataToUpdate, { new: true }),
+        User.findOneAndUpdate({ _id: req.params.id }, dataUserToUpdate)
+      ]);
 
-      const employeeData = await Employee.findOne({ _id: req.params.id })
-
-      const user = await User.updateOne(
-        { _id: employeeData.user },
-        dataUserToUpdate
-      );
-
-
-
-      return res.status(201).json({ employee })
+      return res.status(201).json({ employee: updatedEmployee });
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Erreur interne du serveur.' })
+      console.error(error);
+      return res.status(500).json({ message: 'Erreur interne du serveur.' });
     }
-  },
+  }
 }
 
 module.exports = employeeController

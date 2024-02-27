@@ -7,7 +7,8 @@ const role = require('../../middleware/role');
 
 router.get('/employee',authenticateToken, role(['manager','client']), employeeController.all);
 router.post('/employee/create',authenticateToken, role(['manager']), employeeController.create);
-router.put('/employee/:id/update',authenticateToken, role(['manager']), employeeController.update);
-router.get('/employee/:id',authenticateToken, role(['manager']), employeeController.getById);
+router.put('/employee/:id/update',authenticateToken, role(['manager', 'employee']), employeeController.update);
+router.get('/employee/:id',authenticateToken, role(['manager','employee']), employeeController.getById);
+router.get('/employee/user/:id',authenticateToken, role(['manager','employee']), employeeController.getEmployeeByUserId);
 
 module.exports = router;

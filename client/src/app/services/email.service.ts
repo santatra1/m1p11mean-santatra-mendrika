@@ -12,6 +12,6 @@ export class EmailService {
 
   sendEmail(to: string, subject: string, templateFileName: string, content: any): Observable<any> {
     const body = { to, subject, templateFileName, content };
-    return this.http.post(`${this.apiUrl}/send-email`, body);
+    return this.http.post(`${this.apiUrl}/send-mail`, body);
   }
 }
