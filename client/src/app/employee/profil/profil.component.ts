@@ -4,7 +4,7 @@ import { Employee } from '../../_intefaces/employee';
 import { Service } from '../../_intefaces/service';
 import { ServicesService } from '../../services/services.service';
 import { EmployeeService } from '../../services/employee.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../_components/spinner/spinner.component';
@@ -29,15 +29,12 @@ export class ProfilComponent {
     private employeeService: EmployeeService,
     private router: Router,
     private toastrService: ToastrService,
-    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.employeeId = localStorage.getItem('userId');
     this.setDefaultValue();
     
-    console.log("data: ")
-    console.log(this.employeeDefaultValue)
     this.editForm = this.fb.group({
       matricule: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -59,7 +56,6 @@ export class ProfilComponent {
         this.editForm.patchValue({
           service: serviceId,
         });
-        console.log(this.servicesList)
       },
       (error) => {
         console.error(error);
@@ -107,10 +103,12 @@ export class ProfilComponent {
         },
         (error) => {
           this.isLoading = false;
+          this.toastrService.error("Erreur lors de la modification.");
           console.log(error)
         }
       )
     } else {
+      this.toastrService.success("Erreur dans le formulaire.");
       console.error("Erreur dans le formulaire");
     }
   }
