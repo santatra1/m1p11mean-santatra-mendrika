@@ -23,9 +23,9 @@
                 <div class="mb-3 col-sm-12 col-xl-6">
                     <label for="firstName" class="form-label text-white">Heure de travail</label>
                     <div class="d-flex col-xl-12 justify-content-center mx-auto">
-                        <input type="time" class="form-control" id="startTime" formControlName="startTime" required [attr.disabled]="isTimeDefine ? true : null">
+                        <input type='time' step="3600" class="form-control" id="startTime" formControlName="startTime" required [attr.disabled]="isTimeDefine ? true : null">
                         <span class="mx-2 text-white">à</span>
-                        <input type="time" class="form-control" id="endTime" formControlName="endTime" required [attr.disabled]="isTimeDefine ? true : null">
+                        <input type='time' step="3600" class="form-control" id="endTime" formControlName="endTime" required [attr.disabled]="isTimeDefine ? true : null">
                     </div>
                 </div>
                 
