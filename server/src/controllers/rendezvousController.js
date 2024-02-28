@@ -5,13 +5,24 @@ const Client = require('../models/Client')
 const rendezvousController = {
   getRdvByEmployee: async (req, res) => {
     try {
-        const { employeeId, date } = req.params
-        const dateRdv = new Date(date)
-        const rendezvous = await RendezVous.find({ employee:employeeId, date: dateRdv }).populate("service")
-        res.status(200).json(rendezvous)
+      const { employeeId, date } = req.params
+      const dateRdv = new Date(date)
+      const rendezvous = await RendezVous.find({ employee: employeeId, date: dateRdv }).populate("service")
+      res.status(200).json(rendezvous)
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: 'Internal Server Error' })
+      console.error(error)
+      res.status(500).json({ message: 'Internal Server Error' })
+    }
+  },
+
+  getRdvByClient: async (req, res) => {
+    try {
+      const {clientId} = req.params
+      const rendezvous = await RendezVous.find({ client: clientId }).populate("service")
+      res.status(200).json(rendezvous)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Internal Server Error' })
     }
   },
 
@@ -28,7 +39,7 @@ const rendezvousController = {
         user: req.user.id
       });
 
-      if(!client){
+      if (!client) {
         return res.status(403).json({ message: 'Client non trouver.' })
       }
       console.log(client)

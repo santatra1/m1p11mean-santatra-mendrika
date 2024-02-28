@@ -27,6 +27,7 @@ export class DemandeDeRendezVousComponent implements OnInit {
   employees!: Employee[];
   rendezVous!: [];
   freeHours!: string[];
+  isFreeHoursLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,7 +57,7 @@ export class DemandeDeRendezVousComponent implements OnInit {
   loadEmployees(serviceId: string): void {
     this.employeeService.getEmployeesByServiceId(serviceId).subscribe(
       (employees) => {
-        this.employees = employees;
+        this.employees = employees.filter((employee) => employee.startTime && employee.endTime );
         console.log(this.employees)
       },
       (error) => {
@@ -106,7 +107,8 @@ export class DemandeDeRendezVousComponent implements OnInit {
     const selectedDate = this.rdvForm.value.date;
     if (selectedEmployee) {
       const workHoursStart = selectedEmployee.startTime;
-      const workHoursEnd = selectedEmployee.endTime;
+      const workHoursEnd = selectedEmployee.endTime; 
+      this.isFreeHoursLoading = true;
 
       this.rendezVousService.getRendezVousByEmployee(selectedEmployee._id, selectedDate).subscribe(
         (rendezVous) => {
@@ -162,8 +164,13 @@ export class DemandeDeRendezVousComponent implements OnInit {
           }
 
           this.freeHours = arrayFinal;
+          this.isFreeHoursLoading = false;
           console.log("free hours:");
           console.log(arrayFinal);
+        },
+        (error)=>{
+          this.isFreeHoursLoading = false;
+          console.log("erreur req"+error)
         }
       );
 
@@ -173,7 +180,7 @@ export class DemandeDeRendezVousComponent implements OnInit {
 
   loadScheduleForEmployee(): void {
     if (this.rdvForm.value.employee && this.rdvForm.value.date) {
-      alert("loading shedule")
+      //alert("loading shedule")
       this.calculateFreeHours();
     }
   }

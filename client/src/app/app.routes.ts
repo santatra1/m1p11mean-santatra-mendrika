@@ -16,7 +16,8 @@ import { NavbarComponent as ClientNavBar } from './clients/_layouts/navbar/navba
 import { DemandeDeRendezVousComponent } from './clients/demande-de-rendez-vous/demande-de-rendez-vous.component';
 import { OfferSpecialComponent } from './managers/offer-special/offer-special.component';
 import { ProfilComponent } from './employee/profil/profil.component';
-
+import { RendezVousComponent } from './clients/rendez-vous/rendez-vous.component';
+import { TarifComponent } from './clients/tarif/tarif.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,8 @@ export const routes: Routes = [
     children: [
       { path: 'service', component: ServiceComponent },
       { path: 'demande-de-rendez-vous/:serviceId', component: DemandeDeRendezVousComponent },
+      { path: 'rendez-vous', component: RendezVousComponent },
+      { path: 'tarifs', component: TarifComponent },
     ]
   },
   { path: '', component: LoginComponent },

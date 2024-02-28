@@ -1,65 +1,72 @@
 <form [formGroup]="rdvForm" (ngSubmit)="onSubmit()">
-    <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary text-center rounded p-4">
-            <div class="d-flex align-items-center justify-content-center mb-4">
-                <div class="mb-0 text-center h4">Demande de rendez vous - {{ service.nom }}</div>
-            </div>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-lg-12 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="bg-secondary h-100 row p-5">
+                        <p class="d-inline-block text-center bg-dark text-primary py-1 px-4">Demande de rendez vous - service {{ service.nom }}</p>
+                        <div class="mb-4">
+                            <div class="btn btn-primary"><i class="fas fa-clock"></i> Durée: {{ service.duree }}h</div>
+                        </div>
+                        <div class="mb-3 col-sm-12 col-xl-6">
+                            <label for="service" class="form-label text-white">Date</label>
+                            <input type="date" formControlName="date" class="form-control"
+                                (change)="loadScheduleForEmployee()">
+                        </div>
 
-            <div class="row">
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    <label for="service" class="form-label text-white">Date</label>
-                    <input type="date" formControlName="date" class="form-control" (change)="loadScheduleForEmployee()">
-                </div>
+                        <div class="mb-3 col-sm-12 col-xl-6">
+                            <label for="employee" class="form-label text-white">Employé</label>
+                            <select formControlName="employee" id="" class="form-select"
+                                (change)="loadScheduleForEmployee()">
+                                <option selected value="">Veuillez choisir un employé</option>
+                                <option *ngFor="let employee of employees" [value]="employee._id">{{
+                                    employee.firstName+"
+                                    "+employee.lastName }}</option>
+                            </select>
+                        </div>
 
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    <label for="employee" class="form-label text-white">Employé</label>
-                    <select formControlName="employee" id="" class="form-select" (change)="loadScheduleForEmployee()">
-                        <option selected value="">Veuillez choisir une option</option>
-                        <option *ngFor="let employee of employees" [value]="employee._id">{{ employee.firstName+"
-                            "+employee.lastName }}</option>
-                    </select>
-                </div>
-
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    <label for="employee" class="form-label text-white">Durée du service</label>
-                    <div class="text-white bg-success">{{ service.duree }}h</div>
-                </div>
-
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    <label for="employee" class="form-label text-white">Heure disponible</label>
-                    <select formControlName="startHour" id="" class="form-select">
-                        <option selected value="">Veuillez choisir une option</option>
-                        <option *ngFor="let freeHour of freeHours" [value]="freeHour">{{ freeHour }}</option>
-                    </select>
+                        <div class="mb-3 col-sm-12 col-xl-12">
+                            <label for="employee" class="form-label text-white">Heure(s) disponible(s)</label>
+                            <div><app-spinner *ngIf="isFreeHoursLoading"></app-spinner></div>
+                            <select formControlName="startHour" id="" class="form-select" *ngIf="!isFreeHoursLoading">
+                                <option selected value="">Veuillez choisir une heure</option>
+                                <option *ngFor="let freeHour of freeHours" [value]="freeHour">{{ freeHour }}</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary text-center rounded p-4">
-            <div class="d-flex align-items-center justify-content-center mb-4">
-                <div class="mb-0 text-center h4">Paiement</div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    
-                    <label for="service" class="form-label text-white">Montant</label>
-                    <table class="table table-bordered table-striped">
-                        <tr>
-                            <td>Ar {{ service.prix }}</td>
-                        </tr>
-                    </table>
+    <div class="container-xxl">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-lg-12 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="bg-secondary h-100 row p-5">
+                        <p class="d-inline-block text-center bg-dark text-primary py-1 px-4">Paiement</p>
+                        <div class="row">
+                            <div class="mb-3 col-sm-12 col-xl-6">
+                
+                                <label for="service" class="form-label text-white">Montant</label>
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <td>Ar {{ service.prix }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="mb-3 col-sm-12 col-xl-6">
+                                <label for="service" class="form-label text-white">Votre carte de crédit</label>
+                                <input type="number" formControlName="cardNumber" class="form-control">
+                            </div>
+                        </div>
+                
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-primary">Valider</button><a routerLink="/client/service" class="btn btn-warning"
+                                routerLinkActive="active" ariaCurrentWhenActive="page">Annuler</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3 col-sm-12 col-xl-6">
-                    <label for="service" class="form-label text-white">Votre carte de crédit</label>
-                    <input type="number" formControlName="cardNumber" class="form-control">
-                </div>
-            </div>
-            
-            <div class="d-flex justify-content-center gap-2">
-                <button class="btn btn-primary">Valider</button><a routerLink="/client/service" class="btn btn-warning" routerLinkActive="active" ariaCurrentWhenActive="page">Annuler</a>
             </div>
         </div>
     </div>
