@@ -15,6 +15,10 @@ export class RendezvousService {
     return this.http.get<any[]>(`${this.apiUrl}/rendezvous/${employeeId}/${date}`);
   }
 
+  getRendezVousByUserAccountOfEmployee(){
+    return this.http.get<any[]>(`${this.apiUrl}/rendezvous/employee`);
+  }
+
   getRendezVousByClient(clientId: string | null){
     return this.http.get<any[]>(`${this.apiUrl}/rendezvous/client/${clientId}`);
   }

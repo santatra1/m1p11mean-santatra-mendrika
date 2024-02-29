@@ -1,6 +1,7 @@
 const RendezVous = require('../models/RendezVous')
 const Paiement = require('../models/Paiement')
 const Client = require('../models/Client')
+const Employee = require('../models/Employee')
 const moment = require('moment');
 
 const rendezvousController = {
@@ -9,6 +10,22 @@ const rendezvousController = {
       const { employeeId, date } = req.params
       const dateRdv = new Date(date)
       const rendezvous = await RendezVous.find({ employee: employeeId, date: dateRdv }).populate("service")
+      res.status(200).json(rendezvous)
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Internal Server Error' })
+    }
+  },
+
+  getRdvByEmployeeUserAccount: async (req, res) => {
+    try {
+      const employee = await Employee.findOne({ user: req.user.id })
+      console.log(employee)
+   
+      if (!employee) {
+        return res.status(400).json({ message: 'Employé non trouvé.' })
+      }
+      const rendezvous = await RendezVous.find({ employee: employee._id }).populate("service").populate("client")
       res.status(200).json(rendezvous)
     } catch (error) {
       console.error(error)

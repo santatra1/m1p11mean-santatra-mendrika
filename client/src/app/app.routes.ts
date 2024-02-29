@@ -16,8 +16,9 @@ import { NavbarComponent as ClientNavBar } from './clients/_layouts/navbar/navba
 import { DemandeDeRendezVousComponent } from './clients/demande-de-rendez-vous/demande-de-rendez-vous.component';
 import { OfferSpecialComponent } from './managers/offer-special/offer-special.component';
 import { ProfilComponent } from './employee/profil/profil.component';
-import { RendezVousComponent } from './clients/rendez-vous/rendez-vous.component';
+import { RendezVousComponent as EmployeeRendezVous } from './employee/rendez-vous/rendez-vous.component';
 import { TarifComponent } from './clients/tarif/tarif.component';
+import { RendezVousComponent } from './clients/rendez-vous/rendez-vous.component';
 
 export const routes: Routes = [
   {
@@ -34,7 +35,7 @@ export const routes: Routes = [
   {
     path: 'manager', component: ManagersSidebar, canActivate: [authGuard, roleGuard], data: { role: 'manager' },
     children: [
-      { path: '', component: ManagersDashboard },
+      { path: 'tableau-de-bord', component: ManagersDashboard },
       { path: 'service', component: ServicesComponent },
       { path: 'employee', component: EmployeeList },
       { path: 'employee/create', component: EmployeeCreate },
@@ -45,8 +46,9 @@ export const routes: Routes = [
   {
     path: 'employee', component: EmployeesSidebar, canActivate: [authGuard, roleGuard], data: { role: 'employee' },
     children: [
-      { path: '', component: EmployeeDashboard },
+      { path: 'tableau-de-bord', component: EmployeeDashboard },
       { path: 'profil', component: ProfilComponent },
+      { path: 'rendez-vous', component: EmployeeRendezVous },
     ]
   },
 ];

@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4 px-4" >
     <div class="bg-secondary text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Editer un employé</h6>
+            <h6 class="mb-0">Modifier mon profil</h6>
         </div>
         <div>
             <form [formGroup]="editForm" (ngSubmit)="updateEmployee()" class="row">
@@ -45,7 +45,6 @@
                   <div class="d-flex gap-3 justify-content-center">   
                     <button type="submit" class="btn btn-primary" *ngIf="!isLoading">Modifier</button>
                     <app-spinner *ngIf="isLoading"></app-spinner>
-                    <a routerLink="/manager/employee" class="btn btn-warning" ariaCurrentWhenActive="page">Annuler</a>
                   </div>
     
             </form>

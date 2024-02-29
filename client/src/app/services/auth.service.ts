@@ -37,10 +37,10 @@ export class AuthService {
           this.router.navigate(["client/service"])
           break
         case "manager":
-          this.router.navigate(["manager"])
+          this.router.navigate(["manager/tableau-de-bord"])
           break
         case "employee":
-          this.router.navigate(["employee"])
+          this.router.navigate(["employee/tableau-de-bord"])
           break
         default:
           this.router.navigate([""])

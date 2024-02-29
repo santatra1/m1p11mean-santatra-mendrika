@@ -31,7 +31,7 @@
         <p *ngIf="registrationForm.hasError('mismatch')" class="text-danger">
           Les mots de passe ne correspondent pas.
         </p>
-        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Inscription</button>
+        <button type="submit" class="btn btn-primary py-3 w-100 mb-4" [disabled]="isLoading"><app-spinner *ngIf="isLoading"></app-spinner><div *ngIf="!isLoading">Inscription</div></button>
         <p class="text-center mb-0">Vous avez déjà un compte? <a routerLink="">Se connecter</a></p>
       </form>
     </div>

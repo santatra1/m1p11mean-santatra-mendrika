@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { AngularToastifyModule, ToastService } from 'angular-toastify';
 import { ClientService } from '../services/client.service';
 import { RouterLink,RouterLinkActive, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { SpinnerComponent } from '../_components/spinner/spinner.component';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +23,8 @@ import { RouterLink,RouterLinkActive, Router } from '@angular/router';
     ReactiveFormsModule,
     HttpClientModule,
     AngularToastifyModule,
-    RouterLink
+    RouterLink,
+    SpinnerComponent
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
@@ -29,12 +32,13 @@ import { RouterLink,RouterLinkActive, Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   registrationForm!: FormGroup;
   roles$!: Observable<{ _id: string; name: string }[]>;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
     private clientService: ClientService,
-    private _toastService: ToastService
+    private toastService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -62,15 +66,18 @@ export class SignupComponent implements OnInit {
     event.preventDefault();
     if (this.registrationForm.valid) {
       const userData = this.registrationForm.value;
+      this.isLoading = true;
       this.clientService.registerClient(userData).subscribe(
         (response: any) => {
           this.registrationForm.reset();
-          this._toastService.info('Inscription réussie');
+          this.toastService.success('Inscription réussie');
+          this.isLoading = false;
           console.log(response)
         },
         (error: any) => {
           console.log(error)
-          this._toastService.error("Erreur lors de l'inscription");
+          this.isLoading = false;
+          this.toastService.error("Erreur lors de l'inscription");
         }
       );
     }
