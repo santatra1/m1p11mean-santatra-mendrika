@@ -1,6 +1,7 @@
 const RendezVous = require('../models/RendezVous')
 const Paiement = require('../models/Paiement')
 const Client = require('../models/Client')
+const moment = require('moment');
 
 const rendezvousController = {
   getRdvByEmployee: async (req, res) => {
@@ -25,6 +26,92 @@ const rendezvousController = {
       res.status(500).json({ message: 'Internal Server Error' })
     }
   },
+
+  getRdvForCurrentDay: async (req, res) => {
+    try {
+      const currentDate = moment();
+      const startOfDay = currentDate.clone().startOf('day');
+      const endOfDay = currentDate.clone().endOf('day');
+  
+      const result = await RendezVous.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: startOfDay.toDate(),
+              $lte: endOfDay.toDate(),
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+  
+      const rdvCountForCurrentDay = result.length > 0 ? result[0].count : 0;
+  
+      res.status(200).json({ count: rdvCountForCurrentDay });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul des rendez-vous pour la date d\'aujourd\'hui.' });
+    }
+  },
+  
+  
+
+  getRdvEachMonth: async (req, res) => {
+    try {
+      const startDate = moment('2024-01-01');
+      const endDate = moment('2024-12-31');
+  
+      const result = await RendezVous.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: startDate.toDate(),
+              $lte: endDate.toDate(),
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$date' },
+              month: { $month: '$date' }
+            },
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+  
+      const monthlyCounts = [];
+  
+      const currentMonth = startDate.clone();
+      while (currentMonth.isSameOrBefore(endDate, 'month')) {
+        const monthYearKey = currentMonth.format('YYYY-MM');
+        const monthName = currentMonth.format('MMMM');
+  
+        const resultEntry = result.find(entry => entry._id.year === currentMonth.year() && entry._id.month === currentMonth.month() + 1);
+  
+        monthlyCounts.push({
+          monthYear: monthYearKey,
+          monthName: monthName,
+          count: resultEntry ? resultEntry.count : 0,
+        });
+  
+        currentMonth.add(1, 'month');
+      }
+  
+      res.status(200).json(monthlyCounts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul des rendez-vous par mois.' });
+    }
+  },
+
+
 
   createRendezVous: async (req, res) => {
     try {

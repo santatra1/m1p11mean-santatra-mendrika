@@ -23,4 +23,11 @@ export class RendezvousService {
     return this.http.post<any>(`${this.apiUrl}/rendezvous/create`, rendezvousData);
   }
 
+  getDailyAppointmentCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/rendezvous/daily-count`);
+  }
+  
+  getMonthlyAppointmentCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/rendezvous/monthly-count`);
+  }
 }

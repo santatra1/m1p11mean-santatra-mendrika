@@ -1,4 +1,7 @@
 const Service = require('../../models/Service');
+const Paiement = require('../../models/Paiement');
+const RendezVous = require('../../models/RendezVous')
+const moment = require('moment');
 
 const serviceController = {
   createService: async (req, res) => {
@@ -72,6 +75,111 @@ const serviceController = {
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Erreur interne du serveur.' });
+    }
+  },
+
+  getTurnOverPerMonths: async (req, res) => {
+    try {
+      const startDate = moment('2024-01-01');
+      const endDate = moment('2024-12-31');
+  
+      const result = await RendezVous.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: startDate.toDate(),
+              $lte: endDate.toDate(),
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: 'paiements',
+            localField: '_id',
+            foreignField: 'rendezVous',
+            as: 'paiements',
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$date' },
+              month: { $month: '$date' }
+            },
+            chiffreAffaires: { $sum: { $sum: '$paiements.amount' } }
+          }
+        }
+      ]);
+  
+      const chiffreAffairesByMonth = [];
+  
+      const currentMonth = startDate.clone();
+      while (currentMonth.isSameOrBefore(endDate, 'month')) {
+        const monthYearKey = currentMonth.format('YYYY-MM');
+        const monthName = currentMonth.format('MMMM');
+  
+        const resultEntry = result.find(entry => entry._id.year === currentMonth.year() && entry._id.month === currentMonth.month() + 1);
+  
+        chiffreAffairesByMonth.push({
+          monthYear: monthYearKey,
+          monthName: monthName,
+          chiffreAffaires: resultEntry ? resultEntry.chiffreAffaires : 0,
+        });
+  
+        currentMonth.add(1, 'month');
+      }
+  
+      res.status(200).json(chiffreAffairesByMonth);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul du chiffre d\'affaires par mois.' });
+    }
+  },
+
+  getTurnOverForCurrentDay: async (req, res) => {
+    try {
+      const currentDate = moment();
+      const startDate = currentDate.clone().startOf('day');
+      const endDate = currentDate.clone().endOf('day');
+  
+      const result = await RendezVous.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: startDate.toDate(),
+              $lte: endDate.toDate(),
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: 'paiements',
+            localField: '_id',
+            foreignField: 'rendezVous',
+            as: 'paiements',
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            chiffreAffaires: { $sum: { $sum: '$paiements.amount' } }
+          }
+        }
+      ]);
+  
+      const chiffreAffairesForCurrentDay = [];
+  
+      const dayKey = startDate.format('YYYY-MM-DD');
+  
+      chiffreAffairesForCurrentDay.push({
+        day: dayKey,
+        chiffreAffaires: result.length > 0 ? result[0].chiffreAffaires : 0,
+      });
+  
+      res.status(200).json(chiffreAffairesForCurrentDay);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Une erreur s\'est produite lors du calcul du chiffre d\'affaires pour la date d\'aujourd\'hui.' });
     }
   },
 

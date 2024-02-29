@@ -7,5 +7,7 @@ const role = require('../middleware/role');
 router.get('/rendezvous/client/:clientId',authenticateToken, role(['employee','client']), rendezvousController.getRdvByClient);
 router.get('/rendezvous/:employeeId/:date',authenticateToken, role(['employee','client']), rendezvousController.getRdvByEmployee);
 router.post('/rendezvous/create',authenticateToken, role(['client']), rendezvousController.createRendezVous);
+router.get('/rendezvous/daily-count',authenticateToken, role(['manager']), rendezvousController.getRdvForCurrentDay);
+router.get('/rendezvous/monthly-count',authenticateToken, role(['manager']), rendezvousController.getRdvEachMonth);
 
 module.exports = router;

@@ -31,6 +31,13 @@ export class ServicesService {
   }
   deleteService(serviceId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/service/${serviceId}`);
-  }  
+  }
+  getTurnOverMonthly(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/monthly-turnover`);
+  }
+
+  getTurnOverForCurrentDay(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/daily-turnover`);
+  }
   
 }

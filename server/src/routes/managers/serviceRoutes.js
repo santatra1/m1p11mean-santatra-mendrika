@@ -10,6 +10,7 @@ router.get('/service',authenticateToken,role(["manager","client", "employee"]), 
 router.get('/service/:id',authenticateToken,role(["manager","client","employee"]), serviceController.getServiceById);
 router.put('/service/:id',authenticateToken,role(["manager"]), serviceController.updateService);
 router.delete('/service/:id',authenticateToken,role(["manager"]), serviceController.deleteService); 
-
+router.get('/monthly-turnover', authenticateToken, role(['manager']), serviceController.getTurnOverPerMonths);
+router.get('/daily-turnover', authenticateToken, role(['manager']), serviceController.getTurnOverForCurrentDay);
 
 module.exports = router;
