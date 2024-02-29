@@ -52,15 +52,16 @@ export class OfferSpecialComponent {
   }
 
   onSubmit(){
+    this.toastrService.warning("Patientez pendant l'envoie du mail.");
     if (this.specialOfferForm.valid) {
       const offerData = this.specialOfferForm.value;
       this.isLoading = true;
       // console.log(offerData);
       this.offerSpecialService.sendOfferSpecial(offerData).subscribe(
         (data)=>{
-          this.isLoading = false;
           this.toastrService.success("Offre envoyé à tous nos clients.");
           this.specialOfferForm.reset();
+          this.isLoading = false;
         },
         (error)=>{
           this.isLoading = false;
@@ -81,14 +82,14 @@ export class OfferSpecialComponent {
       const servicePrice = this.servicesList.find((s) => s._id === service)?.prix || 0;
       const finalValue = servicePrice - (servicePrice * remise) / 100;
       this.specialOfferForm.patchValue({
-        finalValue: finalValue.toFixed(2)
+        finalValue: Math.round(Number(finalValue.toFixed(2)))
       });
     } else {
       this.specialOfferForm.patchValue({
         finalValue: ''
       });
     }
-  }
+  }  
   
   
 }
