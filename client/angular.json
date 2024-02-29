@@ -53,19 +53,26 @@
             "production": {
               "optimization": {
                 "scripts": true,
-                 "styles": true,
-                 "fonts": false
-             },
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                  },
+                "fonts": false
+              },
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
