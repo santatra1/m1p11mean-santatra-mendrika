@@ -10,5 +10,6 @@ router.post('/employee/create',authenticateToken, role(['manager']), employeeCon
 router.put('/employee/:id/update',authenticateToken, role(['manager', 'employee']), employeeController.update);
 router.get('/employee/:id',authenticateToken, role(['manager','employee']), employeeController.getById);
 router.get('/employee/user/:id',authenticateToken, role(['manager','employee']), employeeController.getEmployeeByUserId);
+router.get('/employee/commission-monitoring/:id/:date',authenticateToken, role(['employee']), employeeController.getCommissionMonitoring);
 
 module.exports = router;

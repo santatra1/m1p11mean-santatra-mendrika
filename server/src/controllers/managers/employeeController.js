@@ -2,6 +2,8 @@ const Role = require('../../models/Role')
 const User = require('../../models/User')
 const Employee = require('../../models/Employee')
 const Service = require('../../models/Service')
+const RendezVous = require('../../models/RendezVous')
+const Paiement = require('../../models/Paiement')
 
 const employeeController = {
   all: async (req, res) => {
@@ -156,7 +158,72 @@ const employeeController = {
       console.error(error);
       return res.status(500).json({ message: 'Erreur interne du serveur.' });
     }
+  },
+
+  getCommissionMonitoring: async (req, res) => {
+    try {
+      const employeeId = req.params.id;
+      const dateParam = req.params.date;
+  
+      // Parse the date parameter into a Date object
+      const selectedDate = new Date(dateParam);
+  
+      const now = new Date();
+  
+      const todayStart = new Date(selectedDate);
+      todayStart.setHours(0, 0, 0, 0);
+  
+      const todayEnd = new Date(todayStart);
+      todayEnd.setHours(23, 59, 59, 999);
+  
+      const pastAppointments = await RendezVous.find({
+        employee: employeeId,
+        date: {
+          $gte: todayStart,
+          $lte: todayEnd,
+        },
+      }).populate('service');
+  
+      const commissionData = await Promise.all(pastAppointments.map(async (appointment) => {
+        const { service, startHour, _id } = appointment;
+        const { prix, commission } = service;
+  
+        const appointmentDateTime = new Date(appointment.date).setHours(startHour, 0, 0, 0);
+  
+        if (appointmentDateTime < now) {
+          const payment = await Paiement.findOne({ rendezVous: _id });
+  
+          if (!payment) {
+            return null;
+          }
+  
+          const commissionAmount = Math.round((commission / 100) * prix);
+          return {
+            service: service.nom,
+            startHour: startHour,
+            duree: service.duree,
+            prix: service.prix,
+            commissionAmount: commissionAmount,
+          };
+        }
+        return null;
+      }));
+  
+      const validCommissionData = commissionData.filter(Boolean);
+  
+      const totalCommission = validCommissionData.reduce((acc, curr) => acc + curr.commissionAmount, 0);
+  
+      res.status(200).json({
+        commissionData: validCommissionData,
+        totalCommission,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
   }
+  
+  
 }
 
 module.exports = employeeController

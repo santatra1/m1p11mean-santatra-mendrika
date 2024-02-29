@@ -1,42 +1,45 @@
 <!-- Sale & Revenue Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-center p-4">
                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Nombre de reservation journaliere</p>
-                    <h6 class="mb-0">1234</h6>
+                    <p class="mb-2">Commission total pour le {{ selectedDate | date:'dd/MM/yyyy' }}</p>
+                    <h6 class="mb-0 d-flex align-items-center justify-content-center">{{ totalCommission }} Ar</h6>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="datepicker" class="text-white">Choisir une autre date :</label>
+                        <input type="date" id="datepicker" class="form-control" (change)="onDateChange($event)">
+                    </div>
+                </div>
+                <div class="col-4"></div>
             </div>
         </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                <div class="ms-3">
-                    <p class="mb-2">Nombre de reservation mensuel</p>
-                    <h6 class="mb-0">1234</h6>
-                </div>
-            </div>
+        <div>
+            <table class="table table-primary table-hover table-bordered text-center">
+                <thead class="text-white">
+                    <th>Service</th>
+                    <th>Heure</th>
+                    <th>Commission</th>
+                    <th>Prix</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of commissionData">
+                        <td>{{ item.service }}</td>
+                        <td>{{ item.startHour }} </td>
+                        <td>{{ item.commissionAmount }} Ar</td>
+                        <td>{{ item.prix }} Ar</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-chart-area fa-3x text-primary"></i>
-                <div class="ms-3">
-                    <p class="mb-2">Chiffre d'affaire journaliere</p>
-                    <h6 class="mb-0">1234</h6>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                <div class="ms-3">
-                    <p class="mb-2">Chiffre d'affaire mensuel</p>
-                    <h6 class="mb-0">1234</h6>
-                </div>
-            </div>
+        <div class="col-12 text-center" *ngIf="isLoading">
+            <app-spinner></app-spinner>
         </div>
     </div>
 </div>
-<!-- Sale & Revenue End -->

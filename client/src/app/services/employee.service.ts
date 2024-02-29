@@ -73,4 +73,8 @@ export class EmployeeService {
     return "";
   }
 
+  getCommissionMonitoring(employeeId: string | null, date:Date){
+    return this.http.get<any>(`${this.apiUrl}/employee/commission-monitoring/${employeeId}/${date}`);
+  }
+
 }
