@@ -19,10 +19,12 @@ const EmployeeSchema = new mongoose.Schema({
 
   startTime: {
     type: String,
+    default:"08:00"
   },
 
   endTime: {
     type: String,
+    default:"16:00"
   },
   
   isTimeDefine: {
