@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-client/dist
+#client/dist
 client/tmp
 client/out-tsc
 client/bazel-out
