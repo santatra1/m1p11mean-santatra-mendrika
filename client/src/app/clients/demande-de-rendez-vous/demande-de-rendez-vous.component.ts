@@ -28,6 +28,7 @@ export class DemandeDeRendezVousComponent implements OnInit {
   rendezVous!: [];
   freeHours!: string[];
   isFreeHoursLoading = false;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,14 +88,17 @@ export class DemandeDeRendezVousComponent implements OnInit {
   onSubmit(): void {
     if (this.rdvForm.valid) {
       const rdvData = this.rdvForm.value;
+      this.isLoading = true;
       console.log(rdvData)
       this.rendezVousService.createRendezVous(rdvData).subscribe(
         (data) => {
           this.toastrService.success("Rendez vous ajouté avec succès.");
           this.router.navigate(['/client/service']);
+          this.isLoading = false;
         },
         (error) => {
-          console.log(error)
+          console.log(error);
+          this.isLoading = false;
         }
       )
     } else {
